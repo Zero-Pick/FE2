@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import logo1 from '../images/logo1.png';
 import logo2 from '../images/logo2.png';
 
-const Header = () => {
+const SearchHeader = () => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
   const toggleDropdown = (e) => {
@@ -25,27 +25,29 @@ const Header = () => {
 
   return (
     <header>
-      <nav className="flex items-center justify-between p-4 px-20 py-5 shadow-md relative">
+      <nav className="flex items-center justify-between p-4 px-20 py-5 shadow-md">
         <img
           id="logo"
           src={logo1}
           alt="zeropick logo"
           className="w-1/6 hover:cursor-pointer"
-          onClick={() => (window.location.href = 'main')}
+          onClick={() => (window.location.href = '../html/index.html')}
         />
-        <div className="flex space-x-4 font-bold relative">
+        <input
+          type="text"
+          name="search"
+          id="search"
+          placeholder="찾는 제로 식품을 검색하세요.(제품명, 브랜드, 성분 등)"
+          className="w-1/2 justify-between bg-gray-200 text-black p-4 mx-10 focus:outline-none"
+        />
+        <div className="flex space-x-4 font-bold">
           <a id="lately" href="#" className="p-4">
             찜한 상품
           </a>
-          <a
-            id="mypage"
-            href="#"
-            className="p-4 relative"
-            onClick={toggleDropdown}
-          >
+          <a id="mypage" href="#" className="p-4" onClick={toggleDropdown}>
             마이페이지
           </a>
-          <a id="login" href="login" className="p-4">
+          <a id="login" href="../html/login.html" className="p-4">
             로그인
           </a>
         </div>
@@ -124,4 +126,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default SearchHeader;
