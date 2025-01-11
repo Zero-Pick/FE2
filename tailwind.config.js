@@ -17,6 +17,7 @@ module.exports = {
       colors: {
         main01: '#EE4E34', 
         txtgray :'#333',
+        buttongray : '#d9d9d9',
       },
     },
   },
