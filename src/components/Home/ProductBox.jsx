@@ -11,7 +11,7 @@ const ProductBox = () => {
   return (
     <div className="max-w-64">
       <img
-        src="https://contents.lotteon.com/itemimage/20241226075905/LM/88/09/59/93/60/10/4_/00/1/LM8809599360104_001_1.jpg"
+        src="https://product-image.kurly.com/product/image/c9dc2d27-f7ff-4167-b11e-3aac18b97528.jpg"
         alt="제품 이미지"
         className="w-64 h-64 rounded-[4px] object-cover mb-3"
       />

@@ -24,9 +24,9 @@ const Main = () => {
           {/* 카테고리 바 및 ProductReview */}
           <section className="mb-28">
           <h2 className="text-3xl font-bold mb-8">카테고리별 BEST👑</h2>
-          <div className="flex bg-slate-200 h-[517px] justify-between items-start relative">
+          <div className="flex h-[517px] justify-between items-start relative">
             <CategoryBar />
-            <div className="flex justify-between w-[820px] align-stretch bg-slate-100">
+            <div className="flex justify-between w-[820px] align-stretch">
               <ProductReview />
               <ProductReview />
               <ProductReview />
@@ -77,25 +77,25 @@ const Main = () => {
             <span className="text-[#707070] text-base font-normal">2024.10.08 23:59 갱신</span>
           </div>
           <div className="grid grid-cols-2 gap-7">
-            <NewsCard 
-              image="https://via.placeholder.com/120"
-              title="기사 제목 1"
-              content="기사 내용 1"
+          <NewsCard 
+              image="https://product-image.kurly.com/product/image/c9dc2d27-f7ff-4167-b11e-3aac18b97528.jpg"
+              title="기사 제목"
+              content="기사 내용"
             />
             <NewsCard 
-              image="https://via.placeholder.com/120"
-              title="기사 제목 2"
-              content="기사 내용 2"
+              image="https://product-image.kurly.com/product/image/c9dc2d27-f7ff-4167-b11e-3aac18b97528.jpg"
+              title="기사 제목"
+              content="기사 내용"
             />
             <NewsCard 
-              image="https://via.placeholder.com/120"
-              title="기사 제목 3"
-              content="기사 내용 3"
+              image="https://product-image.kurly.com/product/image/c9dc2d27-f7ff-4167-b11e-3aac18b97528.jpg"
+              title="기사 제목"
+              content="기사 내용"
             />
             <NewsCard 
-              image="https://via.placeholder.com/120"
-              title="기사 제목 4"
-              content="기사 내용 4"
+              image="https://product-image.kurly.com/product/image/c9dc2d27-f7ff-4167-b11e-3aac18b97528.jpg"
+              title="기사 제목"
+              content="기사 내용"
             />
           </div>
         </section>
