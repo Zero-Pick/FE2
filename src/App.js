@@ -16,6 +16,7 @@ import Search from './pages/Home/Search';
 import Login from './pages/Auth/Login';
 import Favorites from './pages/MyPage/Favorites';
 import Main from './pages/Home/Main';
+import Category from './pages/Home/Category';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/" />} />
         <Route path="/main" element={<Main />} />
+        <Route path="/category" element={<Category />} />
 
         {/* 회원가입 단계 (path 수정 필요) */}
         <Route path="/login" element={<Login />} />
