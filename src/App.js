@@ -18,12 +18,16 @@ import Favorites from './pages/MyPage/Favorites';
 import Main from './pages/Home/Main';
 import Category from './pages/Home/Category';
 
+import Delete from './pages/MyPage/Delete';
+import ProfileEdit from './pages/MyPage/ProfileEdit';
+import ProfileAuth from './pages/MyPage/ProfileAuth';
+
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Navigate to="/" />} />
-        <Route path="/main" element={<Main />} />
+      <Route path="/"  element={<Main />}  />
+        <Route path="/main"  element={<Main />}  />
         <Route path="/category" element={<Category />} />
 
         {/* 회원가입 단계 (path 수정 필요) */}
@@ -34,6 +38,12 @@ function App() {
 
         <Route path="/search" element={<Search />} />
         <Route path="/mypage/favorites" element={<Favorites />} />
+
+        {/* 마이페이지 정보 수정(path 수정필요) */}
+        <Route path="/mypage/auth" element={<ProfileAuth />} />
+        <Route path="/mypage/edit" element={<ProfileEdit />} />
+        <Route path="/mypage/delete" element={<Delete />} />
+
       </Routes>
     </Router>
   );
