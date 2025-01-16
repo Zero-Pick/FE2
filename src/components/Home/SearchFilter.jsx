@@ -1,12 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 const SearchFilter = () => {
   const [activeFilters, setActiveFilters] = useState(new Set());
   const [excludedFilters, setExcludedFilters] = useState(new Set());
+  const [tempFilters, setTempFilters] = useState(new Set());
+  const [tempExcludes, setTempExcludes] = useState(new Set());
   const [isFilterOptionsVisible, setFilterOptionsVisible] = useState(false);
   const [isExcludeOptionsVisible, setExcludeOptionsVisible] = useState(false);
 
-  const toggleFilter = (filterName) => {
+  const filterRef = useRef(null);
+  const excludeRef = useRef(null);
+
+  const toggleActiveFilter = (filterName) => {
     setActiveFilters((prev) => {
       const newFilters = new Set(prev);
       if (newFilters.has(filterName)) {
@@ -18,8 +23,20 @@ const SearchFilter = () => {
     });
   };
 
-  const toggleExclude = (excludeName) => {
-    setExcludedFilters((prev) => {
+  const toggleTempFilter = (filterName) => {
+    setTempFilters((prev) => {
+      const newFilters = new Set(prev);
+      if (newFilters.has(filterName)) {
+        newFilters.delete(filterName);
+      } else {
+        newFilters.add(filterName);
+      }
+      return newFilters;
+    });
+  };
+
+  const toggleTempExclude = (excludeName) => {
+    setTempExcludes((prev) => {
       const newExcludes = new Set(prev);
       if (newExcludes.has(excludeName)) {
         newExcludes.delete(excludeName);
@@ -30,8 +47,22 @@ const SearchFilter = () => {
     });
   };
 
+  const applyFilters = () => {
+    setActiveFilters((prev) => new Set([...prev, ...tempFilters]));
+    setFilterOptionsVisible(false);
+  };
+
+  const applyExcludes = () => {
+    setExcludedFilters(new Set(tempExcludes));
+    setExcludeOptionsVisible(false);
+  };
+
   const renderFilterOptions = () => (
-    <div className="absolute top-full mt-2 right-0 bg-white p-4 border shadow-lg w-80">
+    <div
+      ref={filterRef}
+      className="absolute top-full w-[481px] mt-2 right-0 bg-white p-4 border shadow-lg"
+      onClick={(e) => e.stopPropagation()}
+    >
       <div className="grid grid-cols-3 gap-2 mb-4">
         {[
           '달달해요',
@@ -46,10 +77,12 @@ const SearchFilter = () => {
         ].map((filter) => (
           <button
             key={filter}
-            className={`filter-option bg-gray-200 px-3 py-2 ${
-              activeFilters.has(filter) ? 'bg-gray-400' : ''
+            className={`px-4 py-2 rounded-lg text-[14px] box-content border-2 ${
+              tempFilters.has(filter)
+                ? 'border-main01 bg-[#FCEDDA] font-bold'
+                : 'border-[#f1f1f1] bg-[#f1f1f1] font-normal'
             }`}
-            onClick={() => toggleFilter(filter)}
+            onClick={() => toggleTempFilter(filter)}
           >
             {filter}
           </button>
@@ -57,14 +90,14 @@ const SearchFilter = () => {
       </div>
       <div className="flex justify-end space-x-2">
         <button
-          className="text-red-500"
+          className="text-main01"
           onClick={() => setFilterOptionsVisible(false)}
         >
           닫기
         </button>
         <button
-          className="text-white bg-red-500 px-3 py-1"
-          onClick={() => setFilterOptionsVisible(false)}
+          className="text-white bg-main01 px-3 py-1"
+          onClick={applyFilters}
         >
           적용
         </button>
@@ -73,7 +106,11 @@ const SearchFilter = () => {
   );
 
   const renderExcludeOptions = () => (
-    <div className="absolute top-full mt-2 right-0 bg-white p-4 border shadow-lg w-80">
+    <div
+      ref={excludeRef}
+      className="absolute top-full mt-2 right-0 bg-white p-4 border shadow-lg w-80"
+      onClick={(e) => e.stopPropagation()}
+    >
       <div className="grid grid-cols-2 gap-2 mb-4">
         {[
           '감미료 A',
@@ -85,10 +122,12 @@ const SearchFilter = () => {
         ].map((exclude) => (
           <button
             key={exclude}
-            className={`exclude-option bg-gray-200 px-3 py-2 ${
-              excludedFilters.has(exclude) ? 'bg-gray-400' : ''
+            className={`px-4 py-2 rounded-lg text-[14px] box-content border-2 ${
+              tempExcludes.has(exclude)
+                ? 'border-main01 bg-[#FCEDDA] font-bold'
+                : 'border-[#f1f1f1] bg-[#f1f1f1] font-normal'
             }`}
-            onClick={() => toggleExclude(exclude)}
+            onClick={() => toggleTempExclude(exclude)}
           >
             {exclude}
           </button>
@@ -96,14 +135,14 @@ const SearchFilter = () => {
       </div>
       <div className="flex justify-end space-x-2">
         <button
-          className="text-red-500"
+          className="text-main01"
           onClick={() => setExcludeOptionsVisible(false)}
         >
           닫기
         </button>
         <button
-          className="text-white bg-red-500 px-3 py-1"
-          onClick={() => setExcludeOptionsVisible(false)}
+          className="text-white bg-main01 px-3 py-1"
+          onClick={applyExcludes}
         >
           적용
         </button>
@@ -113,73 +152,166 @@ const SearchFilter = () => {
 
   return (
     <div className="flex items-center justify-between my-4 mt-10">
-      <div className="flex items-center">
+      {/* 제로 관련 버튼 */}
+      <div className="flex items-center space-x-4">
         <button
-          className={`bg-gray-200 px-3 py-2 mr-3 ${
-            activeFilters.has('zero-sugar') ? 'bg-gray-400' : ''
-          }`}
-          onClick={() => toggleFilter('zero-sugar')}
+          className={`px-4 py-2  rounded-lg  text-[14px] box-content   border-2
+        ${
+          activeFilters.has('zero-sugar')
+            ? 'border-main01 bg-[#FCEDDA] font-bold'
+            : 'border-[#f1f1f1] bg-[#f1f1f1] font-normal'
+        }`}
+          onClick={() => toggleActiveFilter('zero-sugar')}
         >
           제로슈거
         </button>
         <button
-          className={`bg-gray-200 px-3 py-2 mr-3 ${
-            activeFilters.has('zero-calories') ? 'bg-gray-400' : ''
-          }`}
-          onClick={() => toggleFilter('zero-calories')}
+          className={`px-4 py-2  rounded-lg  text-[14px] box-content   border-2
+        ${
+          activeFilters.has('zero-calories')
+            ? 'border-main01 bg-[#FCEDDA] font-bold'
+            : 'border-[#f1f1f1] bg-[#f1f1f1] font-normal'
+        }`}
+          onClick={() => toggleActiveFilter('zero-calories')}
         >
           제로칼로리
         </button>
         <button
-          className={`bg-gray-200 px-3 py-2 ${
-            activeFilters.has('blood-sugar-management') ? 'bg-gray-400' : ''
-          }`}
-          onClick={() => toggleFilter('blood-sugar-management')}
+          className={`px-4 py-2  rounded-lg  text-[14px] box-content   border-2
+        ${
+          activeFilters.has('blood-sugar-management')
+            ? 'border-main01 bg-[#FCEDDA] font-bold'
+            : 'border-[#f1f1f1] bg-[#f1f1f1] font-normal'
+        }`}
+          onClick={() => toggleActiveFilter('blood-sugar-management')}
         >
           혈당 관리 인증
         </button>
       </div>
+
+      {/* 드롭다운 필터 */}
       <div className="flex items-center space-x-4">
         <div
-          className="cursor-pointer border-2 border-black p-2 flex items-center relative"
-          onClick={() => setFilterOptionsVisible(!isFilterOptionsVisible)}
+          className={`flex items-center justify-between px-4 py-2 rounded-lg text-txtgray text-[14px] box-content border-2 cursor-pointer relative ${
+            isFilterOptionsVisible
+              ? 'border-[#707070] bg-white'
+              : 'border-[#f1f1f1] bg-[#f1f1f1]'
+          }`}
+          onClick={(e) => {
+            setFilterOptionsVisible(!isFilterOptionsVisible);
+          }}
         >
           <p>이런 상품을 찾아요</p>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth="1.5"
-            stroke="currentColor"
-            className="w-6 h-6 ml-1"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M19.5 8.25l-7.5 7.5-7.5-7.5"
-            />
-          </svg>
+          <span className="ml-2">
+            {isFilterOptionsVisible ? (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+              >
+                <g clipPath="url(#clip0_748_9053)">
+                  <path
+                    d="M6.175 12.8418L10 9.02513L13.825 12.8418L15 11.6668L10 6.6668L5 11.6668L6.175 12.8418Z"
+                    fill="#707070"
+                  />
+                </g>
+                <defs>
+                  <clipPath id="clip0_748_9053">
+                    <rect
+                      width="20"
+                      height="20"
+                      fill="white"
+                      transform="matrix(1 0 0 -1 0 20)"
+                    />
+                  </clipPath>
+                </defs>
+              </svg>
+            ) : (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+              >
+                <g clipPath="url(#clip0_777_10660)">
+                  <path
+                    d="M6.175 7.1582L10 10.9749L13.825 7.1582L15 8.3332L10 13.3332L5 8.3332L6.175 7.1582Z"
+                    fill="#707070"
+                  />
+                </g>
+                <defs>
+                  <clipPath id="clip0_777_10660">
+                    <rect width="20" height="20" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
+            )}
+          </span>
           {isFilterOptionsVisible && renderFilterOptions()}
         </div>
+
         <div
-          className="cursor-pointer border-2 border-black p-2 flex items-center relative"
-          onClick={() => setExcludeOptionsVisible(!isExcludeOptionsVisible)}
+          className={`flex items-center justify-between px-4 py-2 rounded-lg text-txtgray text-[14px] box-content border-2 cursor-pointer relative ${
+            isExcludeOptionsVisible
+              ? 'border-[#707070] bg-white'
+              : 'border-[#f1f1f1] bg-[#f1f1f1]'
+          }`}
+          onClick={(e) => {
+            setExcludeOptionsVisible(!isExcludeOptionsVisible);
+          }}
         >
           <p>제외할 대체감미료</p>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth="1.5"
-            stroke="currentColor"
-            className="w-6 h-6 ml-1"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M19.5 8.25l-7.5 7.5-7.5-7.5"
-            />
-          </svg>
+          <span className="ml-2">
+            {isExcludeOptionsVisible ? (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+              >
+                <g clipPath="url(#clip0_748_9053)">
+                  <path
+                    d="M6.175 12.8418L10 9.02513L13.825 12.8418L15 11.6668L10 6.6668L5 11.6668L6.175 12.8418Z"
+                    fill="#707070"
+                  />
+                </g>
+                <defs>
+                  <clipPath id="clip0_748_9053">
+                    <rect
+                      width="20"
+                      height="20"
+                      fill="white"
+                      transform="matrix(1 0 0 -1 0 20)"
+                    />
+                  </clipPath>
+                </defs>
+              </svg>
+            ) : (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+              >
+                <g clipPath="url(#clip0_777_10660)">
+                  <path
+                    d="M6.175 7.1582L10 10.9749L13.825 7.1582L15 8.3332L10 13.3332L5 8.3332L6.175 7.1582Z"
+                    fill="#707070"
+                  />
+                </g>
+                <defs>
+                  <clipPath id="clip0_777_10660">
+                    <rect width="20" height="20" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
+            )}
+          </span>
           {isExcludeOptionsVisible && renderExcludeOptions()}
         </div>
       </div>
