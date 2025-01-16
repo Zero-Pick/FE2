@@ -10,11 +10,11 @@ const LoginPage = () => {
 
       {/* 메인 컨텐츠 */}
       <div className="flex flex-col justify-center items-center text-center w-2/3 mx-auto h-screen mt-[-100px]">
-        <h1 className="font-extrabold text-3xl mb-3">
-          건강한
-          <span className="text-main01">제로</span>를 위한 시작
+        <h1 className="font-extrabold text-2xl mb-3">
+          건강한&nbsp;
+          <span className="text-main01">제로</span>를 위한 시작,
         </h1>
-        <img src={logo1} className="h-12" alt="Logo" />
+        <img src={logo1} className="h-10" alt="Logo" />
 
         <div className="space-y-3 w-80 mt-12">
           {/* 카카오 로그인 */}

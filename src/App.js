@@ -17,6 +17,12 @@ import Login from './pages/Auth/Login';
 import Favorites from './pages/MyPage/Favorites';
 import Main from './pages/Home/Main';
 import Category from './pages/Home/Category';
+import Reviews from './pages/MyPage/Reviews';
+import Suggest from './pages/MyPage/Suggest';
+import Report from './pages/MyPage/Report';
+
+import ModifyInformation from './components/Detail/ModifyInformation';
+import CreateReview from './components/Detail/CreateReview';
 
 function App() {
   return (
@@ -32,8 +38,18 @@ function App() {
         <Route path="/signup/step2" element={<SignUpStep2 />} />
         <Route path="/signup/fin" element={<SignUpFin />} />
 
+        {/* Home */}
         <Route path="/search" element={<Search />} />
+
+        {/* Mypage */}
         <Route path="/mypage/favorites" element={<Favorites />} />
+        <Route path="/mypage/reviews" element={<Reviews />} />
+        <Route path="/mypage/suggest" element={<Suggest />} />
+        <Route path="/mypage/report" element={<Report />} />
+
+        {/* 모달 테스트용 */}
+        <Route path="/modi" element={<ModifyInformation />} />
+        <Route path="/revi" element={<CreateReview />} />
       </Routes>
     </Router>
   );

@@ -10,7 +10,7 @@ const Favorites = () => {
   }));
 
   return (
-    <div className="bg-gray-100 min-h-screen">
+    <div className="bg-white min-h-screen">
       {/* 헤더 */}
       <SearchHeader />
 
