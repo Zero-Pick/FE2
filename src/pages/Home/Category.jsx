@@ -2,7 +2,7 @@ import React from "react";
 import ProductBox from "../../components/Home/ProductBox";
 import ProductBest from "../../components/Home/ProductBest";
 import SearchHeader from '../../components/SearchHeader';
-import FilterButton from "../../components/Home/FilterButton";
+import FilterButton from "../../components/FilterButton";
 import FilterDropButton from "../../components/Home/FilterDropButton";
 
 const Category = () => {
@@ -46,7 +46,7 @@ const Category = () => {
           <div className="flex items-center justify-between mb-6">
             <div className="flex space-x-4 ">
               <FilterButton label="제로슈거"  />
-              <FilterButton label="제품리뷰"  />
+              <FilterButton label="제로칼로리"  />
               <FilterButton label="혈당 관리 인증"  />
               
             </div>

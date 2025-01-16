@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import Header from "../../components/Header";
 import Toast from "../../components/Toast";
+import DeleteCheck from "../../components/Mypage/DeleteCheck";
+import FilterButton from "../../components/FilterButton";
 
+ 
 const ProfileEdit = () => {
 
   return (
     <div className="w-full h-auto">
       <Header />
       <Toast/>
+      <DeleteCheck />
       {/* mt 임의로 넣음 수정필요 */}
       <main className="w-[816px] h-[548px] py-8 mx-auto border-[1px] border-[#d9d9d9] mt-20">        
         <div className="w-[712px] mx-auto">

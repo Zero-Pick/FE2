@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import LoginHeader from '../../components/LoginHeader';
 
 function SignUpStep1() {
   const [nickname, setNickname] = useState("");
@@ -18,7 +19,9 @@ function SignUpStep1() {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen">
+    <div>
+      <LoginHeader />
+    <div className="flex mt-16 justify-center h-screen">
       <div className="text-center">
         <h1 className="text-2xl font-bold">
           <span className="text-main01">제로픽</span>에 오신 것을 환영합니다!
@@ -41,12 +44,13 @@ function SignUpStep1() {
           <div className="flex items-center justify-center mt-4">
             <button 
             onClick={handleNextClick}
-            className="w-350px h-52px bg-main01 text-white font-bold text-lg rounded-10px">
+            className="w-[350px] h-[52px] bg-main01 text-white font-bold text-lg rounded-10px">
               다음
             </button>
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 }

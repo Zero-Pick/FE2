@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import LoginHeader from '../../components/LoginHeader';
 
 function SignUpStep2() {
   const navigate = useNavigate();
@@ -9,7 +10,9 @@ function SignUpStep2() {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen">
+    <div>
+    <LoginHeader />
+    <div className="flex mt-16 justify-center h-screen">
       <div className="text-center">
         <h1 className="text-2xl font-bold ">
         회원가입이 완료되었습니다.
@@ -22,12 +25,13 @@ function SignUpStep2() {
           <div className="flex items-center justify-center">
             <button 
             onClick={handleNextClick}
-            className="w-350px h-52px font-bold text-lg bg-main01 text-white rounded-10px">
+            className="w-[350px] h-[52px] font-bold text-lg bg-main01 text-white rounded-10px">
               시작하기
             </button>
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 }
