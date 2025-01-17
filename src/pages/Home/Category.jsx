@@ -1,9 +1,10 @@
 import React from "react";
 import ProductBox from "../../components/Home/ProductBox";
-import ProductBest from "../../components/Home/ProductBest";
+import ProductReview from "../../components/Home/ProductReview";
 import SearchHeader from '../../components/SearchHeader';
 import FilterButton from "../../components/FilterButton";
 import FilterDropButton from "../../components/Home/FilterDropButton";
+import GoBack from "../../components/Home/GoBack";
 
 const Category = () => {
   return (
@@ -12,12 +13,8 @@ const Category = () => {
       <main className="mx-auto w-[1100px]">
 
         {/* 뒤로가기 */}
-        <div className="flex mt-16 mb-8 items-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="19" height="32" viewBox="0 0 19 32" fill="none">
-          <path d="M18.832 2.832L16 0L0 16L16 32L18.832 29.168L5.664 16L18.832 2.832Z" fill="black"/>
-        </svg>
-        <span className="font-bold text-4xl ml-6 "> 음료 </span>
-        </div>
+        <GoBack label="음료" />
+
         {/* 배너 */}
         <section className="mb-16">
           <div className="w-full h-[180px] bg-buttongray flex items-center justify-center text-white font-bold text-xl">
@@ -29,10 +26,10 @@ const Category = () => {
         <section className="mb-16">
           <h2 className="text-4xl font-bold mb-8 flex justify-center">음료 BEST👑</h2>
           <div className="flex justify-between items-center">
-            <ProductBest />
-            <ProductBest />
-            <ProductBest />
-            <ProductBest />
+            <ProductReview />
+            <ProductReview />
+            <ProductReview />
+            <ProductReview />
           </div>
         </section>
 

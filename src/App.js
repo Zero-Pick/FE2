@@ -28,6 +28,8 @@ import Delete from './pages/MyPage/Delete';
 import ProfileEdit from './pages/MyPage/ProfileEdit';
 import ProfileAuth from './pages/MyPage/ProfileAuth';
 
+import Test from './pages/Test';
+
 function App() {
   return (
     <Router>
@@ -59,6 +61,11 @@ function App() {
         <Route path="/mypage/auth" element={<ProfileAuth />} />
         <Route path="/mypage/edit" element={<ProfileEdit />} />
         <Route path="/mypage/delete" element={<Delete />} />
+
+
+        {/* 디자인 확인용 */}
+        <Route path="/test" element={<Test />} />
+      
       </Routes>
     </Router>
   );
