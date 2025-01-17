@@ -1,9 +1,9 @@
   import React from "react";
 
-const ZeroTag = ({ text }) => {
+const ZeroTag = ({label }) => {
   return (
     <span className="bg-txtgray text-white text-xs font-normal px-2 py-1 rounded-lg ">
-      제로칼로리{text}
+      {label}
     </span>
   );
 };
