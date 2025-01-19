@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Popup from '../Popup';
 import Toast2 from '../Toast2';
 
-const CreateReview = ({ onClose }) => {
+const ModifyReview = ({ onClose }) => {
   const positiveTags = [
     '달달해요',
     '담백하고 깔끔해요',
@@ -118,7 +118,7 @@ const CreateReview = ({ onClose }) => {
 
         {/* 제목 */}
         <div className="flex justify-start items-center mb-6">
-          <h1 className="text-[32px] font-bold">리뷰 작성</h1>
+          <h1 className="text-[32px] font-bold">리뷰 수정</h1>
           <p className="ml-3 mt-2 text-[#707070] text-base">
             | 라라스윗 저당 초코우유
           </p>
@@ -339,7 +339,7 @@ const CreateReview = ({ onClose }) => {
             onClick={handleSubmit}
             className="w-[92px] h-[32px] bg-main01 text-white px-[26px] py-[4px] focus:outline-none text-base rounded-[8px] mt-[8px]"
           >
-            등록
+            저장
           </button>
         </div>
       </div>
@@ -347,7 +347,7 @@ const CreateReview = ({ onClose }) => {
       {/* 팝업 */}
       {isPopupVisible && (
         <Popup
-          title="작성하신 리뷰를 등록하시겠습니까?"
+          title="작성하신 리뷰를 수정하시겠습니까?"
           description=""
           confirmText="확인"
           cancelText="취소"
@@ -359,7 +359,7 @@ const CreateReview = ({ onClose }) => {
       {/* Toast 메시지 */}
       {showToast && (
         <Toast2
-          title="리뷰가 정상적으로 등록되었습니다."
+          title="리뷰가 정상적으로 수정되었습니다."
           message=""
           onClose={handleToastClose}
         />
@@ -368,4 +368,4 @@ const CreateReview = ({ onClose }) => {
   );
 };
 
-export default CreateReview;
+export default ModifyReview;

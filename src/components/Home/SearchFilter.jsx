@@ -77,7 +77,7 @@ const SearchFilter = () => {
         ].map((filter) => (
           <button
             key={filter}
-            className={`px-4 py-2 rounded-lg text-[14px] box-content border-2 ${
+            className={`py-2 rounded-lg text-[13px] box-content border-2 ${
               tempFilters.has(filter)
                 ? 'border-main01 bg-[#FCEDDA] font-bold'
                 : 'border-[#f1f1f1] bg-[#f1f1f1] font-normal'
@@ -122,7 +122,7 @@ const SearchFilter = () => {
         ].map((exclude) => (
           <button
             key={exclude}
-            className={`px-4 py-2 rounded-lg text-[14px] box-content border-2 ${
+            className={`py-2 rounded-lg text-[13px] box-content border-2 ${
               tempExcludes.has(exclude)
                 ? 'border-main01 bg-[#FCEDDA] font-bold'
                 : 'border-[#f1f1f1] bg-[#f1f1f1] font-normal'
