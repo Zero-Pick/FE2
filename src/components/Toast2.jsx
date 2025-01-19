@@ -13,7 +13,7 @@ const Toast2 = ({ title, message, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-      <div className="bg-white rounded-lg p-6 w-[455px] shadow-lg flex flex-col items-center">
+      <div className="bg-white rounded-lg p-6 w-auto shadow-lg flex flex-col items-center">
         <div className="mb-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"

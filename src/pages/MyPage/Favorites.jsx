@@ -1,6 +1,7 @@
 import React from 'react';
 import Sidebar from '../../components/Mypage/Sidebar';
 import SearchHeader from '../../components/SearchHeader';
+import FavoriteProductBox from '../../components/Mypage/FavoriteProductBox';
 
 const Favorites = () => {
   const products = Array.from({ length: 13 }, (_, index) => ({
@@ -15,33 +16,47 @@ const Favorites = () => {
       <SearchHeader />
 
       {/* 메인 타이틀 */}
-      <div className="max-w-screen-lg mx-auto mt-8 mb-4">
+      <div className="max-w-[1098px] mx-auto mt-8 mb-4">
         <h1 className="text-3xl font-bold">마이페이지</h1>
       </div>
 
       {/* 컨테이너 */}
-      <div className="flex mx-auto max-w-screen-lg">
+      <div className="flex mx-auto max-w-[1098px]">
         {/* 왼쪽 사이드바 */}
         <Sidebar />
 
         {/* 오른쪽 상품 목록 */}
-        <section className="w-3/4 bg-white p-6 shadow-md rounded-lg ml-6">
-          <h2 className="font-bold text-2xl mb-4">찜한 제품</h2>
-          <p className="text-gray-500 mb-6">총 13개</p>
-          <div id="productList" className="grid grid-cols-4 gap-4">
-            {products.map((product) => (
-              <div
-                key={product.id}
-                className="border rounded-md shadow-md p-4 flex flex-col items-center"
-              >
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="w-full h-32 object-cover mb-2"
-                />
-                <p className="text-sm font-semibold">{product.name}</p>
+        <section className="flex flex-col items-center w-[816px] border bg-white py-[32px] rounded-[4px] ml-6">
+          <div className="flex flex-col w-[712px]">
+            <h2 className="font-normal text-2xl">찜한 제품</h2>
+
+            {/* 구분선 */}
+            <hr className="w-full border-t-2 border-[#d9d9d9] my-6" />
+
+            {products.length > 0 ? (
+              <>
+                {/* 총 개수 */}
+                <p className="text-[#707070] mb-[16px]">
+                  총 {products.length}개
+                </p>
+
+                {/* 찜한 상품 */}
+                <div id="productList" className="grid grid-cols-4 gap-6">
+                  {products.map((product) => (
+                    <div
+                      key={product.id}
+                      className="flex flex-col items-center"
+                    >
+                      <FavoriteProductBox />
+                    </div>
+                  ))}
+                </div>
+              </>
+            ) : (
+              <div className="flex justify-center items-center my-[40px] text-[#707070]">
+                <p className="text-base font-normal">찜한 제품이 없습니다.</p>
               </div>
-            ))}
+            )}
           </div>
         </section>
       </div>

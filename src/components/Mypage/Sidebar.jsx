@@ -7,43 +7,61 @@ const Sidebar = () => {
   const location = useLocation();
 
   return (
-    <aside className="flex flex-col w-[270px] flex-start gap-[16px]">
+    <aside className="flex flex-col w-[256px] flex-start gap-[16px]">
       {/* 위에 있는 박스 */}
-      <div className="flex h-[52px] flex-row justify-between items-center self-stretch bg-[#F1F1F1] rounded-[8px] p-2">
-        <img src={logo2} className="h-6" alt="Logo" />
-        <p className="font-bold text-lg">
-          닉네임여섯님, <span className="text-main01">건강</span>하세요!
+      <div className="flex h-[52px] flex-row justify-center items-center self-stretch bg-[#F1F1F1] rounded-[8px]">
+        <img src={logo2} className="h-5 mr-2" alt="Logo" />
+        <p className="font-semibold text-[15px]">
+          닉네임여섯자님, <span className="text-main01">건강하세요!</span>
         </p>
       </div>
 
       {/* 아래에 있는 박스 */}
-      <div className="flex h-[480px] p-[32px_0px] justify-center items-start gap-[10px] self-stretch bg-[#F1F1F1] rounded-[8px]">
+      <div className="flex h-[480px] py-[32px] justify-center items-start gap-[10px] self-stretch bg-[#F1F1F1] rounded-[8px]">
         {/* 아래 박스 내부 내용 */}
-        <ul className="flex w-[191px] flex-col items-start gap-[24px] text-gray-600">
+        <ul className="flex w-[191px] flex-col items-start gap-[24px] font-normal">
           <li
-            className={`flex items-center cursor-pointer ${
+            className={`flex items-center cursor-pointer text-[15px] ${
               location.pathname === '/mypage/favorites'
-                ? 'text-main01 font-bold'
+                ? 'text-main01'
                 : 'hover:text-black'
             }`}
             onClick={() => navigate('/mypage/favorites')}
           >
-            찜한 제품 13
+            찜한 제품 &nbsp;
+            <span
+              className={`${
+                location.pathname === '/mypage/favorites' ? 'font-bold' : ''
+              }`}
+            >
+              13
+            </span>
           </li>
           <li
-            className={`flex items-center cursor-pointer ${
+            className={`flex items-center cursor-pointer text-[15px] ${
               location.pathname === '/mypage/reviews'
-                ? 'text-main01 font-bold'
+                ? 'text-main01'
                 : 'hover:text-black'
             }`}
             onClick={() => navigate('/mypage/reviews')}
           >
-            내가 쓴 리뷰 2
+            내가 쓴 리뷰 &nbsp;
+            <span
+              className={`${
+                location.pathname === '/mypage/reviews' ? 'font-bold' : ''
+              }`}
+            >
+              2
+            </span>
           </li>
+
+          {/* 구분선 */}
+          <hr className="w-full border-t border-[#d9d9d9]" />
+
           <li
-            className={`cursor-pointer ${
+            className={`cursor-pointer text-[15px] ${
               location.pathname === '/mypage/suggest'
-                ? 'text-main01 font-bold'
+                ? 'text-main01'
                 : 'hover:text-black'
             }`}
             onClick={() => navigate('/mypage/suggest')}
@@ -51,9 +69,9 @@ const Sidebar = () => {
             제품 등록 현황
           </li>
           <li
-            className={`flex items-center cursor-pointer ${
+            className={`flex items-center cursor-pointer text-[15px] ${
               location.pathname === '/mypage/report'
-                ? 'text-main01 font-bold'
+                ? 'text-main01'
                 : 'hover:text-black'
             }`}
             onClick={() => navigate('/mypage/report')}
@@ -69,7 +87,13 @@ const Sidebar = () => {
               •
             </span>
           </li>
-          <li className="hover:text-black cursor-pointer">회원정보 수정</li>
+
+          {/* 구분선 */}
+          <hr className="w-full border-t border-[#d9d9d9]" />
+
+          <li className="text-black cursor-pointer text-[15px]">
+            회원정보 수정
+          </li>
         </ul>
       </div>
     </aside>

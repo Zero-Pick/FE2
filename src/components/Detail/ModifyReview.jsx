@@ -88,7 +88,10 @@ const ModifyReview = ({ onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+    <div
+      className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center"
+      style={{ top: -24, left: 0, height: '100vh', overflowY: 'auto' }}
+    >
       <div className="bg-white rounded-lg w-[720px] p-8 shadow-lg relative">
         {/* 닫기 버튼 */}
         <button
