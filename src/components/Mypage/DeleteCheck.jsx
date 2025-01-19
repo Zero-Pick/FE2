@@ -9,11 +9,10 @@ const DeleteCheck = ({ onConfirm, onCancel }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white rounded-lg shadow-lg p-6 ">
-        <div className="w-[416px] bg-slate-400  flex justify-between items-center">
-          <h2 className="text-lg font-bold text-[#323232]">
-            정말 서비스를 탈퇴하시겠어요?
-          </h2>
+      <div className="bg-white w-[480px] px-6 py-8 rounded-lg shadow-lg">
+        <div className="w-[416px]  bg-slate-500 flex justify-between items-center">
+          <h2 className="text-2xl font-bold">
+            정말 서비스를 탈퇴하시겠어요?</h2>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -33,12 +32,12 @@ const DeleteCheck = ({ onConfirm, onCancel }) => {
             </defs>
           </svg>
         </div>
-        <p className="mb-6 text-sm text-[#6d6d6d]">
+        <p className="mb-6 mt-6 text-sm text-[#6d6d6d]">
           탈퇴 시 모든 회원 정보와 기록이 삭제되며 복구할 수 없습니다. 
           <br/>
           단, 작성하신 리뷰는 삭제되지 않습니다.
         </p>
-        <div className="mb-6 w-[416px] flex items-center">
+        <div className="mb-6 w-[416px] flex items-center"> 
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
