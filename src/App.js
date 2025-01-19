@@ -27,8 +27,6 @@ import ProfileAuth from './pages/MyPage/ProfileAuth';
 
 import Test from './pages/Test';
 
-import Re from './components/Detail/ProductReview';
-
 function App() {
   return (
     <Router>
@@ -59,8 +57,6 @@ function App() {
 
         {/* 디자인 확인용 */}
         <Route path="/test" element={<Test />} />
- 
-        <Route path="/re" element={<Re />} />
       </Routes>
     </Router>
   );
