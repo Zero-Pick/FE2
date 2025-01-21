@@ -21,9 +21,6 @@ import Reviews from './pages/MyPage/Reviews';
 import Suggest from './pages/MyPage/Suggest';
 import Report from './pages/MyPage/Report';
 
-import ModifyInformation from './components/Detail/ModifyInformation';
-import CreateReview from './components/Detail/CreateReview';
-
 import Delete from './pages/MyPage/Delete';
 import ProfileEdit from './pages/MyPage/ProfileEdit';
 import ProfileAuth from './pages/MyPage/ProfileAuth';
@@ -53,19 +50,13 @@ function App() {
         <Route path="/mypage/suggest" element={<Suggest />} />
         <Route path="/mypage/report" element={<Report />} />
 
-        {/* 모달 테스트용 */}
-        <Route path="/modi" element={<ModifyInformation />} />
-        <Route path="/revi" element={<CreateReview />} />
-
         {/* 마이페이지 정보 수정(path 수정필요) */}
         <Route path="/mypage/auth" element={<ProfileAuth />} />
         <Route path="/mypage/edit" element={<ProfileEdit />} />
         <Route path="/mypage/delete" element={<Delete />} />
 
-
         {/* 디자인 확인용 */}
         <Route path="/test" element={<Test />} />
-      
       </Routes>
     </Router>
   );

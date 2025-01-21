@@ -46,7 +46,11 @@ const LoginHeader = () => {
         </div>
         {/* Login */}
         <div className="font-bold">
-          <a id="login" href="#" className="p-4 text-gray-700 hover:text-black">
+          <a
+            id="login"
+            href="#"
+            className="p-4 text-[#707070] hover:text-black"
+          >
             로그인
           </a>
         </div>
