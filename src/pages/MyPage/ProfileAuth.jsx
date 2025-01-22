@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Header from "../../components/Header";
+import Sidebar from "../../components/Mypage/Sidebar"
 
 const ProfileAuth = () => {
   const [email, setEmail] = useState("");
@@ -24,8 +25,18 @@ const ProfileAuth = () => {
   return (
     <div className="w-full h-auto">
       <Header />
-      {/* mt 임의로 넣음 수정필요 */}
-      <main className="w-[816px] h-[548px] py-8 mx-auto border-[1px] border-[#d9d9d9] mt-20">        
+      {/* 메인 타이틀 */}
+      <div className="max-w-[1098px] mx-auto mt-8 mb-8">
+        <h1 className="text-3xl font-bold">마이페이지</h1>
+      </div>
+
+      {/* 컨테이너 */}
+      <div className="flex mx-auto  max-w-[1098px]">
+        {/* 왼쪽 사이드바 */}
+        <Sidebar />
+
+      {/* 오른쪽 */}
+      <main className="w-[816px] h-[548px] py-8 mx-auto border-[1px] ml-[26px] border-[#d9d9d9] ">        
         <div className="w-[712px] mx-auto">
         {/* 제목 */}
         <h1 className="text-2xl font-normal mb-6">회원정보 수정</h1>
@@ -82,6 +93,7 @@ const ProfileAuth = () => {
         </div>
         </div>
       </main>
+      </div>
     </div>
   );
 };
