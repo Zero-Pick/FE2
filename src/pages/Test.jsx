@@ -1,34 +1,14 @@
 import React from "react";
-import PutButton from "../components/Detail/PutButton";
-import DetailRound from "../components/Detail/DetailRound";
-import CompareBox from "../components/Detail/CompareBox";
-import ZeroTag from "../components/Home/ZeroTag";
-import RateBox from "../components/Detail/RateBox";
-import GoBackProduct from "../components/Detail/GoBackProduct";
+import AboutZero from "../components/Detail/AboutZero";
+import AboutReview from "../components/Detail/AboutReview";
 
-
+import SumUpZero from "../components/Detail/SumUpZero";
+import SumUpReview from "../components/Detail/SumUpReview";
 const Test = () => { 
   return (
-    <div className="min-h-screen bg-gray-500">
-      <GoBackProduct label={"검색결과"}/>
-      <div className="flex">
-      <DetailRound label="당류" value={0} />
-      <DetailRound label="칼로리" value={15} />
-      </div>
-      <div className="flex space-x-2">
-    <ZeroTag label="제로슈거" />
-    <ZeroTag label="제로칼로리" />
-    </div>
-    <div className="">
-      <CompareBox />
-      </div>
-      <div className="">
-      <RateBox rating="4.22" reviews="12"  />
-      </div>
-      <div>
-        <PutButton label="찜"/>
-        <PutButton label="비교함담기"/>
-      </div>
+    <div className=" bg-gray-500">
+      <SumUpReview overallRating={"4.22"} reviewCount={"4"}/>
+      <SumUpZero sugarContent={"“찐” 제로슈거 인증!"} calorieContent={"제로칼로리 표시 기준치 이하예요!"}/>
     </div>
   );
 };

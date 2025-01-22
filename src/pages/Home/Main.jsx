@@ -5,7 +5,12 @@ import CategoryBar from "../../components/Home/CategoryBar";
 import NewsCard from "../../components/Home/NewsCard";
 import Header from '../../components/Header';
 
+import { useNavigate } from "react-router-dom";
+
 const Main = () => {
+
+  const navigate = useNavigate();
+
   return (
     <div className="w-full h-auto">
       <Header />
@@ -33,6 +38,7 @@ const Main = () => {
 
               {/* 더 많은상품보기 버튼 */}
               <button 
+                onClick={() => navigate("/category")}
                 className="text-[14px] text-txtgray font-normal px-6 py-1 border border-buttongray bg-white rounded-[4px] flex justify-center items-center absolute right-[0px] bottom-[0px]"
               >
                 더 많은 상품 보기

@@ -20,6 +20,7 @@ import Category from './pages/Home/Category';
 import Reviews from './pages/MyPage/Reviews';
 import Suggest from './pages/MyPage/Suggest';
 import Report from './pages/MyPage/Report';
+import Detail from './pages/Detail/Detail';
 
 import Delete from './pages/MyPage/Delete';
 import ProfileEdit from './pages/MyPage/ProfileEdit';
@@ -43,6 +44,9 @@ function App() {
 
         {/* Home */}
         <Route path="/search" element={<Search />} />
+
+        {/* Detail */}
+        <Route path="/detail" element={<Detail />} />
 
         {/* Mypage */}
         <Route path="/mypage/favorites" element={<Favorites />} />

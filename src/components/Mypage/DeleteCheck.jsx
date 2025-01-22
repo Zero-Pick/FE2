@@ -9,8 +9,8 @@ const DeleteCheck = ({ onConfirm, onCancel }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white w-[480px] px-6 py-8 rounded-lg shadow-lg">
-        <div className="w-[416px]  bg-slate-500 flex justify-between items-center">
+      <div className="bg-white w-[480px] px-8 py-6 rounded-lg shadow-lg">
+        <div className="w-[416px] flex justify-between items-center">
           <h2 className="text-2xl font-bold">
             정말 서비스를 탈퇴하시겠어요?</h2>
           <svg
