@@ -2,9 +2,10 @@ import React from "react";
 import ProductBox from "../../components/Home/ProductBox";
 import ProductReview from "../../components/Home/ProductReview";
 import SearchHeader from '../../components/SearchHeader';
-import FilterButton from "../../components/FilterButton";
-import FilterDropButton from "../../components/Home/FilterDropButton";
+// import FilterButton from "../../components/FilterButton";
+// import FilterDropButton from "../../components/Home/FilterDropButton";
 import GoBack from "../../components/Home/GoBack";
+import SearchFilter from "../../components/Home/SearchFilter"
 
 const Category = () => {
   return (
@@ -35,26 +36,13 @@ const Category = () => {
 
         {/* 구분선 */}
         <hr className="mb-16 border-t  border-gray-300" />
-
         {/* 전 상품 섹션 */}
         <section className="mb-32">
           <h2 className="text-4xl font-bold flex justify-center mb-8">전 상품</h2>
           {/* 필터 메뉴 */}
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex space-x-4 ">
-              <FilterButton label="제로슈거"  />
-              <FilterButton label="제로칼로리"  />
-              <FilterButton label="혈당 관리 인증"  />
-              
-            </div>
-            <div className="flex space-x-4">
-              <FilterDropButton label="이번 상품을 찾아요" />
-              <FilterDropButton label="제외할 대체감미료" />
-            </div>
-          </div>
-
+          <SearchFilter />
         {/* 구분선 */}
-          <hr className="mb-6 border-t border-gray-300" />
+          <hr className="mb-6 mt-6 border-t border-gray-300" />
 
            {/* 정렬 메뉴 */}
            <div className="flex items-center justify-between mb-6">

@@ -90,8 +90,15 @@ const Sidebar = () => {
 
           {/* 구분선 */}
           <hr className="w-full border-t border-[#d9d9d9]" />
-
-          <li className="text-black cursor-pointer text-[15px]">
+          
+          <li
+            className={`cursor-pointer text-[15px] ${
+              location.pathname === '/mypage/suggest'
+                ? 'text-main01'
+                : 'hover:text-black'
+            }`}
+            onClick={() => navigate('/mypage/edit')}
+          >
             회원정보 수정
           </li>
         </ul>

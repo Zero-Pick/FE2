@@ -70,7 +70,9 @@ const Header = () => {
                   >
                     <span>{text}</span>
                     <span className="text-main01 opacity-0 group-hover:opacity-100">
-                      &gt;
+                    <svg xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewBox="0 0 8 14" fill="none">
+                    <path d="M0.888672 11.8956L5.28393 6.99961L0.888672 2.10361L2.2418 0.599609L7.99978 6.99961L2.2418 13.3996L0.888672 11.8956Z" fill="#EE4E34"/>
+                  </svg>
                     </span>
                   </button>
                 ))}

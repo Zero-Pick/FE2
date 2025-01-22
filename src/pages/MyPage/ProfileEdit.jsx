@@ -4,13 +4,16 @@ import Toast from "../../components/Toast";
 import DeleteCheck from "../../components/Mypage/DeleteCheck";
 import FilterButton from "../../components/FilterButton";
 import RadioButton from "../../components/RadioButton";
- 
+import Sidebar from "../../components/Mypage/Sidebar" 
+
+
 const ProfileEdit = () => {
 
   return (
     <div className="w-full h-auto">
       <Header />
       <Toast/>
+      <Sidebar/> 
       <DeleteCheck />
       {/* mt 임의로 넣음 수정필요 */}
       <main className="w-[816px] h-[548px] py-8 mx-auto border-[1px] border-[#d9d9d9] mt-20">        

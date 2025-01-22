@@ -3,8 +3,26 @@ import ProductRateBox from "./ProductRateBox";
 import DetailRound from "./DetailRound";
 import PutButton from "./PutButton";
 import ZeroTag from "../../components/Home/ZeroTag";
+import CompareBox from "./CompareBox";
 
 const DetailBox = () => {
+  const [showPopup, setShowPopup] = React.useState(false);
+
+  const handleCompareButtonClick = (event) => {
+    const buttonRect = event.target.getBoundingClientRect();
+    setShowPopup((prev) => {
+      if (!prev) {
+        setPopupPosition({
+          top: buttonRect.bottom + window.scrollY + 10,
+          left: buttonRect.left + window.scrollX,
+        });
+      }
+      return !prev;
+    });
+  };
+
+  const [popupPosition, setPopupPosition] = React.useState({ top: 0, left: 0 });
+
   return (
     <div className="flex flex-wrap justify-between w-[1100px] h-[535px]">
       {/* 왼쪽 : 이미지 및 평점 */}
@@ -50,10 +68,20 @@ const DetailBox = () => {
 
         {/* 버튼 2개 */}
         <div className="flex space-x-5">
-          <PutButton label="비교함에 담기" />
+          <PutButton label="비교함에 담기" onClick={handleCompareButtonClick} />
           <PutButton label="찜" />
         </div>
       </div>
+
+      {/* 팝업 */}
+      {showPopup && (
+        <div
+          className="absolute"
+          style={{ top: `${popupPosition.top}px`, left: `${popupPosition.left}px` }}
+        >
+          <CompareBox />
+        </div>
+      )}
     </div>
   );
 };
