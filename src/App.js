@@ -21,6 +21,7 @@ import Reviews from './pages/MyPage/Reviews';
 import Suggest from './pages/MyPage/Suggest';
 import Report from './pages/MyPage/Report';
 import Detail from './pages/Detail/Detail';
+import Comparison from './pages/Detail/Comparison';
 
 import Delete from './pages/MyPage/Delete';
 import ProfileEdit from './pages/MyPage/ProfileEdit';
@@ -47,7 +48,8 @@ function App() {
 
         {/* Detail */}
         <Route path="/detail" element={<Detail />} />
-
+        <Route path="/comparison" element={<Comparison />} />
+        
         {/* Mypage */}
         <Route path="/mypage/favorites" element={<Favorites />} />
         <Route path="/mypage/reviews" element={<Reviews />} />

@@ -4,6 +4,8 @@ import ProductReview from "../../components/Home/ProductReview";
 import CategoryBar from "../../components/Home/CategoryBar";
 import NewsCard from "../../components/Home/NewsCard";
 import Header from '../../components/Header';
+import FloatingBox from '../../components/FloatingBox';
+import SearchBanner from "../../components/Home/SearchBanner";
 
 import { useNavigate } from "react-router-dom";
 
@@ -16,9 +18,7 @@ const Main = () => {
       <Header />
         {/* 배너 */}
         <section className="mb-28">
-          <div className="w-full h-[360px] bg-buttongray flex items-center justify-center text-white font-bold text-xl">
-            <span>배너영역</span>
-          </div>
+          <SearchBanner/>
         </section>
 
 
@@ -106,8 +106,10 @@ const Main = () => {
           </div>
         </section>
       </main>
+      {/* Floating Box 추가 */}
+      <FloatingBox />
     </div>
-  );
+  ); 
 };
 
 export default Main;
