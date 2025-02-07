@@ -12,13 +12,17 @@ import api from "../../api/axiosInstance"
 const Main = () => {
 
   const navigate = useNavigate();
-  const [selectedCategory, setSelectedCategory] = useState("BEVERAGE_TEA");
+  const [selectedCategory, setSelectedCategory] = useState("BEVERAGE_TEA"); // 카테고리 선택
   const [products, setProducts] = useState([]);
+  const [topProducts, setTopProducts] = useState([]); // 주목하는 상품
+
 
   useEffect(() => {
-    fetchProducts(selectedCategory);
+    fetchProducts(selectedCategory); // 카테고리
+    fetchTopProducts(); // 주목하는 상품
   }, [selectedCategory]);
 
+  // 카테고리 상품품
   const fetchProducts = async (category) => {
     try {
       const response = await api.get("/home/category", {
@@ -27,6 +31,16 @@ const Main = () => {
       setProducts(response.data.information);
     } catch (error) {
       console.error("Error fetching products:", error);
+    }
+  };
+
+  // 주목하는 상품
+  const fetchTopProducts = async () => {
+    try {
+      const response = await api.get("/home");
+      setTopProducts(response.data.topPopularityProducts);
+    } catch (error) {
+      console.error("Error fetching top products:", error);
     }
   };
 
@@ -77,10 +91,11 @@ const Main = () => {
         <section className="mb-28">
           <h2 className="text-3xl font-bold mb-8">지금 많은 분들이 주목하는📢</h2>
           <div className="flex justify-between items-center">
-            <ProductBox />
-            <ProductBox />
-            <ProductBox />
-            <ProductBox />
+          {topProducts.length > 0 
+            ? topProducts.map((product) => (
+                <ProductBox key={product.id} product={product} />
+              ))
+            : <p>상품 정보를 불러오는 중입니다...</p>}
           </div>
         </section>
 
