@@ -323,11 +323,11 @@ const ProductReview = () => {
         </div>
 
         {/* 다른 상품 추천 */}
-        <div className="flex flex-col items-center gap-10">
+        <div className="flex w-[1100px] flex-col items-center gap-10">
           <p className="text-[36px] font-bold text-center">
             이런 제품은 어떠세요?
           </p>
-          <div className="flex justify-center space-x-4 items-center">
+          <div className="flex w-[1100px] justify-between items-center">
             <ProductBox />
             <ProductBox />
             <ProductBox />
@@ -340,4 +340,3 @@ const ProductReview = () => {
 };
 
 export default ProductReview;
- 
