@@ -4,8 +4,10 @@ import logo1 from '../images/logo1.png';
 import logo2 from '../images/logo2.png';
 import { ReactComponent as MenuIcon } from '../images/Menu.svg';
 
-const SearchHeader = () => {
+const SearchHeader = ({ onSearch }) => {
   const navigate = useNavigate();
+
+  const [searchTerm, setSearchTerm] = useState('');
 
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
@@ -33,6 +35,12 @@ const SearchHeader = () => {
     }
   };
 
+  const handleSearch = () => {
+    if (searchTerm.trim()) {
+      onSearch(searchTerm.trim());
+    }
+  };
+
   useEffect(() => {
     document.addEventListener('click', closeDropdown);
     document.addEventListener('click', closeMenu);
@@ -44,6 +52,7 @@ const SearchHeader = () => {
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
+      handleSearch();
       setSearchActive(false);
     }
   };
@@ -81,9 +90,18 @@ const SearchHeader = () => {
                   >
                     <span>{text}</span>
                     <span className="text-main01 opacity-0 group-hover:opacity-100">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewBox="0 0 8 14" fill="none">
-                    <path d="M0.888672 11.8956L5.28393 6.99961L0.888672 2.10361L2.2418 0.599609L7.99978 6.99961L2.2418 13.3996L0.888672 11.8956Z" fill="#EE4E34"/>
-                  </svg>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="8"
+                        height="14"
+                        viewBox="0 0 8 14"
+                        fill="none"
+                      >
+                        <path
+                          d="M0.888672 11.8956L5.28393 6.99961L0.888672 2.10361L2.2418 0.599609L7.99978 6.99961L2.2418 13.3996L0.888672 11.8956Z"
+                          fill="#EE4E34"
+                        />
+                      </svg>
                     </span>
                   </button>
                 ))}
@@ -109,6 +127,8 @@ const SearchHeader = () => {
             className={`flex-grow text-xs bg-transparent ${
               searchActive ? 'text-[#707070]' : 'text-black'
             } focus:outline-none`}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
             onKeyDown={handleKeyDown}
             onFocus={handleFocus}
           />

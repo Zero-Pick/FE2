@@ -1,29 +1,75 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import SearchHeader from '../../components/SearchHeader';
 import SearchFilter from '../../components/Home/SearchFilter';
 import ProductBox from '../../components/Home/ProductBox';
 
 const SearchResult = () => {
   const [products, setProducts] = useState([]);
-  const [selectedSort, setSelectedSort] = useState('인기순');
+  const [selectedSort, setSelectedSort] = useState('POPULARITY');
+  const [totalCount, setTotalCount] = useState(0);
+  const [searchKeyword, setSearchKeyword] = useState('');
+
+  // 제로 필터 버튼
+  const [zeroSugar, setZeroSugar] = useState(false);
+  const [zeroKcal, setZeroKcal] = useState(false);
+
+  const fetchProducts = async (keyword = searchKeyword) => {
+    try {
+      setSearchKeyword(keyword);
+      const response = await axios.get(
+        'http://15.164.252.103:8080/product/search',
+        {
+          params: {
+            keyword,
+            zeroSugar: zeroSugar || null,
+            zeroKcal: zeroKcal || null,
+            exceptErythritol: false,
+            exceptAllulose: false,
+            tags: [],
+            category: null,
+            sort: selectedSort,
+          },
+        }
+      );
+
+      const { content, totalElements } = response.data.information;
+      setProducts(content);
+      setTotalCount(totalElements);
+    } catch (error) {
+      console.error('Error fetching products:', error);
+    }
+  };
 
   React.useEffect(() => {
-    const mockProducts = Array.from({ length: 30 }, (_, index) => ({
-      id: index + 1,
-      name: `Product ${index + 1}`,
-      image: 'https://via.placeholder.com/150',
-    }));
-    setProducts(mockProducts);
-  }, []);
+    if (searchKeyword) {
+      fetchProducts();
+    }
+  }, [zeroSugar, zeroKcal, selectedSort]);
 
   const handleSortClick = (sortType) => {
     setSelectedSort(sortType);
   };
 
+  const toggleZeroSugar = () => {
+    setZeroSugar((prev) => !prev);
+  };
+
+  const toggleZeroKcal = () => {
+    setZeroKcal((prev) => !prev);
+  };
+
+  const handleSearch = (keyword) => {
+    setSearchKeyword(keyword);
+    setZeroSugar(false);
+    setZeroKcal(false);
+    fetchProducts(keyword);
+  };
+
   return (
     <div>
       {/* 헤더 */}
-      <SearchHeader />
+      <SearchHeader onSearch={handleSearch} />
 
       <div className="container mx-auto w-[1100px] mt-6">
         <header className="flex items-center space-x-3 mb-6">
@@ -43,11 +89,16 @@ const SearchResult = () => {
               />
             </svg>
           </div>
-          <h1 className="font-bold text-3xl">'오레오' 검색 결과</h1>
+          <h1 className="font-bold text-3xl">'{searchKeyword}' 검색 결과</h1>
         </header>
 
         {/* 필터 버튼 */}
-        <SearchFilter />
+        <SearchFilter
+          zeroSugar={zeroSugar}
+          zeroKcal={zeroKcal}
+          toggleZeroSugar={toggleZeroSugar}
+          toggleZeroKcal={toggleZeroKcal}
+        />
 
         {/* 구분선 */}
         <hr className="my-7 border-t  border-gray-300" />
@@ -55,38 +106,38 @@ const SearchResult = () => {
         {/* 정렬 버튼 */}
         <div className="flex justify-between items-center my-[-10px]">
           <p className="font-bold text-xl">
-            총 <span className="text-main01">{products.length}</span>개
+            총 <span className="text-main01">{totalCount}</span>개
           </p>
           <div>
             <button
               className={`px-3 py-2 mr-3 ${
-                selectedSort === '인기순' ? 'font-bold' : 'font-normal'
+                selectedSort === 'POPULARITY' ? 'font-bold' : 'font-normal'
               }`}
-              onClick={() => handleSortClick('인기순')}
+              onClick={() => handleSortClick('POPULARITY')}
             >
               인기순
             </button>
             <button
               className={`px-3 py-2 mr-3 ${
-                selectedSort === '신상품순' ? 'font-bold' : 'font-normal'
+                selectedSort === 'NEWEST' ? 'font-bold' : 'font-normal'
               }`}
-              onClick={() => handleSortClick('신상품순')}
+              onClick={() => handleSortClick('NEWEST')}
             >
               신상품순
             </button>
             <button
               className={`px-3 py-2 mr-3 ${
-                selectedSort === '리뷰 많은 순' ? 'font-bold' : 'font-normal'
+                selectedSort === 'MOST_REVIEWED' ? 'font-bold' : 'font-normal'
               }`}
-              onClick={() => handleSortClick('리뷰 많은 순')}
+              onClick={() => handleSortClick('MOST_REVIEWED')}
             >
               리뷰 많은 순
             </button>
             <button
               className={`px-3 py-2 ${
-                selectedSort === '별점 높은 순' ? 'font-bold' : 'font-normal'
+                selectedSort === 'HIGHEST_RATED' ? 'font-bold' : 'font-normal'
               }`}
-              onClick={() => handleSortClick('별점 높은 순')}
+              onClick={() => handleSortClick('HIGHEST_RATED')}
             >
               별점 높은 순
             </button>
@@ -97,18 +148,10 @@ const SearchResult = () => {
         <hr className="my-7 border-t  border-gray-300" />
 
         {/* 상품 리스트 */}
-        <div className="flex justify-between items-center mb-16">
-          <ProductBox />
-          <ProductBox />
-          <ProductBox />
-          <ProductBox />
-        </div>
-
-        <div className="flex justify-between items-center mb-16">
-          <ProductBox />
-          <ProductBox />
-          <ProductBox />
-          <ProductBox />
+        <div className="grid grid-cols-4 gap-4 mb-16">
+          {products.map((product) => (
+            <ProductBox key={product.id} product={product} />
+          ))}
         </div>
       </div>
     </div>

@@ -1,6 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-const SearchFilter = () => {
+const SearchFilter = ({
+  zeroSugar,
+  zeroKcal,
+  toggleZeroSugar,
+  toggleZeroKcal,
+}) => {
   const [activeFilters, setActiveFilters] = useState(new Set());
   const [excludedFilters, setExcludedFilters] = useState(new Set());
   const [tempFilters, setTempFilters] = useState(new Set());
@@ -157,22 +162,22 @@ const SearchFilter = () => {
         <button
           className={`px-4 py-2  rounded-lg  text-[14px] box-content   border-2
         ${
-          activeFilters.has('zero-sugar')
+          zeroSugar
             ? 'border-main01 bg-[#FCEDDA] font-bold'
             : 'border-[#f1f1f1] bg-[#f1f1f1] font-normal'
         }`}
-          onClick={() => toggleActiveFilter('zero-sugar')}
+          onClick={toggleZeroSugar}
         >
           제로슈거
         </button>
         <button
           className={`px-4 py-2  rounded-lg  text-[14px] box-content   border-2
         ${
-          activeFilters.has('zero-calories')
+          zeroKcal
             ? 'border-main01 bg-[#FCEDDA] font-bold'
             : 'border-[#f1f1f1] bg-[#f1f1f1] font-normal'
         }`}
-          onClick={() => toggleActiveFilter('zero-calories')}
+          onClick={toggleZeroKcal}
         >
           제로칼로리
         </button>
