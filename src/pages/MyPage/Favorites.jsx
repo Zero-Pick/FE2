@@ -1,14 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import Sidebar from '../../components/Mypage/Sidebar';
 import SearchHeader from '../../components/SearchHeader';
 import FavoriteProductBox from '../../components/Mypage/FavoriteProductBox';
 
 const Favorites = () => {
-  const products = Array.from({ length: 13 }, (_, index) => ({
-    id: index + 1,
-    name: `Product ${index + 1}`,
-    image: 'https://via.placeholder.com/150',
-  }));
+  const [products, setProducts] = useState([]);
+  const [totalCount, setTotalCount] = useState(0);
+
+  const fetchFavorites = async () => {
+    try {
+      const response = await axios.get(
+        'http://15.164.252.103:8080/product/bookmark',
+        {
+          params: {
+            page: 0,
+            size: 10,
+          },
+        }
+      );
+
+      const { content, totalElements } = response.data.information;
+      setProducts(content);
+      setTotalCount(totalElements);
+    } catch (error) {
+      console.error('찜한 상품 조회 실패:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchFavorites();
+  }, []);
 
   return (
     <div className="bg-white min-h-screen">
@@ -36,9 +58,7 @@ const Favorites = () => {
             {products.length > 0 ? (
               <>
                 {/* 총 개수 */}
-                <p className="text-[#707070] mb-[16px]">
-                  총 {products.length}개
-                </p>
+                <p className="text-[#707070] mb-[16px]">총 {totalCount}개</p>
 
                 {/* 찜한 상품 */}
                 <div id="productList" className="grid grid-cols-4 gap-6">
@@ -47,7 +67,7 @@ const Favorites = () => {
                       key={product.id}
                       className="flex flex-col items-center"
                     >
-                      <FavoriteProductBox />
+                      <FavoriteProductBox product={product} />
                     </div>
                   ))}
                 </div>
