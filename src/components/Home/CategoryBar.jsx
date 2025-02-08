@@ -1,47 +1,32 @@
-import React, { useState } from "react";
+import React from "react";
 
-const CategoryBar = () => {
-  const categories = [
-    "음료 · 차",
-    "과자 · 빵",
-    "유가공품",
-    "아이스크림 · 빙과",
-    "초콜릿",
-    "면 · 떡",
-    "농수산가공식품",
-  ];
+const categoryMap = {
+  BEVERAGE_TEA: "음료 · 차",
+  SNACK_BREAD: "과자 · 빵",
+  DAIRY_PRODUCTS: "유가공품",
+  ICE_CREAM: "아이스크림 · 빙과",
+  CHOCOLATE: "초콜릿",
+  NOODLE_RICE_CAKE: "면 · 떡",
+  AGRICULTURAL_PRODUCTS: "농수산가공식품",
+  ETC: "기타",
+};
 
-  const [selected, setSelected] = useState();
+const categories = Object.keys(categoryMap);
 
+const CategoryBar = ({ onSelectCategory, selectedCategory }) => {
   return (
     <div className="space-y-2">
       {categories.map((category) => (
         <div
           key={category}
-          onClick={() => setSelected(category)}
+          onClick={() => onSelectCategory(category)}
           className={`relative flex items-center justify-center w-64 h-16 rounded-md cursor-pointer ${
-            selected === category
+            selectedCategory === category
               ? "bg-[#FCEDDA] text-main01 text-base font-bold"
-              : "bg-[#f1f1f1] text-black text-base font-bold"
+              : "bg-[#f1f1f1] text-black text-base font-bold hover:bg-[#FCEDDA] hover:text-main01"
           }`}
         >
-          {/* 텍스트 */}
-          <span>{category}</span>
-
-          {/* SVG 아이콘 */}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="8"
-            height="14"
-            viewBox="0 0 8 14"
-            fill="none"
-            className="absolute right-[16px]"
-          >
-            <path
-              d="M0.634918 11.8956L5.03018 6.99961L0.634918 2.10361L1.98804 0.599609L7.74603 6.99961L1.98804 13.3996L0.634918 11.8956Z"
-              fill="#707070"
-            />
-          </svg>
+          <span>{categoryMap[category]}</span>
         </div>
       ))}
     </div>

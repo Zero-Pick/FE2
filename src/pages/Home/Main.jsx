@@ -1,24 +1,55 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import ProductBox from "../../components/Home/ProductBox";
 import ProductReview from "../../components/Home/ProductReview";
 import CategoryBar from "../../components/Home/CategoryBar";
 import NewsCard from "../../components/Home/NewsCard";
 import Header from '../../components/Header';
-
+import FloatingBox from '../../components/FloatingBox';
+import SearchBanner from "../../components/Home/SearchBanner";
 import { useNavigate } from "react-router-dom";
+import api from "../../api/axiosInstance"
 
 const Main = () => {
 
   const navigate = useNavigate();
+  const [selectedCategory, setSelectedCategory] = useState("BEVERAGE_TEA"); // 카테고리 선택
+  const [products, setProducts] = useState([]);
+  const [topProducts, setTopProducts] = useState([]); // 주목하는 상품
+
+
+  useEffect(() => {
+    fetchProducts(selectedCategory); // 카테고리
+    fetchTopProducts(); // 주목하는 상품
+  }, [selectedCategory]);
+
+  // 카테고리 상품품
+  const fetchProducts = async (category) => {
+    try {
+      const response = await api.get("/home/category", {
+        params: { category },
+      });
+      setProducts(response.data.information);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
+  };
+
+  // 주목하는 상품
+  const fetchTopProducts = async () => {
+    try {
+      const response = await api.get("/home");
+      setTopProducts(response.data.topPopularityProducts);
+    } catch (error) {
+      console.error("Error fetching top products:", error);
+    }
+  };
 
   return (
     <div className="w-full h-auto">
       <Header />
         {/* 배너 */}
         <section className="mb-28">
-          <div className="w-full h-[360px] bg-buttongray flex items-center justify-center text-white font-bold text-xl">
-            <span>배너영역</span>
-          </div>
+          <SearchBanner/>
         </section>
 
 
@@ -30,16 +61,18 @@ const Main = () => {
           <section className="mb-28">
           <h2 className="text-3xl font-bold mb-8">카테고리별 BEST👑</h2>
           <div className="flex h-[517px] justify-between items-start relative">
-            <CategoryBar />
-            <div className="flex justify-between w-[820px] align-stretch">
-              <ProductReview />
-              <ProductReview />
-              <ProductReview />
+          <CategoryBar 
+            onSelectCategory={setSelectedCategory}
+            selectedCategory={selectedCategory} />
+            <div className="flex justify-between w-[820px] align-stretch flex-wrap">
+              {products.slice(0, 3).map((product, index) => (
+                <ProductReview key={product.id} product={product} rank={index + 1} />
+              ))}
 
               {/* 더 많은상품보기 버튼 */}
               <button 
                 onClick={() => navigate("/category")}
-                className="text-[14px] text-txtgray font-normal px-6 py-1 border border-buttongray bg-white rounded-[4px] flex justify-center items-center absolute right-[0px] bottom-[0px]"
+                className="text-[14px] text-txtgray font-normal px-6 py-1 border border-buttongray bg-white rounded-[4px] flex justify-center items-center absolute right-[0px] bottom-[-20px]"
               >
                 더 많은 상품 보기
               </button>
@@ -58,10 +91,11 @@ const Main = () => {
         <section className="mb-28">
           <h2 className="text-3xl font-bold mb-8">지금 많은 분들이 주목하는📢</h2>
           <div className="flex justify-between items-center">
-            <ProductBox />
-            <ProductBox />
-            <ProductBox />
-            <ProductBox />
+          {topProducts.length > 0 
+            ? topProducts.map((product) => (
+                <ProductBox key={product.id} product={product} />
+              ))
+            : <p>상품 정보를 불러오는 중입니다...</p>}
           </div>
         </section>
 
@@ -106,8 +140,10 @@ const Main = () => {
           </div>
         </section>
       </main>
+      {/* Floating Box 추가 */}
+      <FloatingBox />
     </div>
-  );
+  ); 
 };
 
 export default Main;
