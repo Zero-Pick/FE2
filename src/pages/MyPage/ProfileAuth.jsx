@@ -1,26 +1,62 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Mypage/Sidebar"
+import api from "../../api/axiosInstance";
 
 const ProfileAuth = () => {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(false);
+  const [maskedEmail, setMaskedEmail] = useState(""); // 마스킹된 이메일 
+  const [emailMatchError, setEmailMatchError] = useState(false); // 이메일 불일치 
+  const navigate = useNavigate(); 
 
-  const handleEmailChange = (e) => {
-    const value = e.target.value;
-    setEmail(value);
+   // 마스킹된 이메일 가져오기
+   useEffect(() => {
+    const fetchMaskedEmail = async () => {
+      try {
+        const response = await api.get("/member/getEmail");
+        setMaskedEmail(response.data.maskEmail);
+      } catch (error) {
+        console.error("마스킹된 이메일 불러오기 실패:", error);
+      }
+    };
+
+    fetchMaskedEmail();
+  }, []);
+
+    // 이메일 입력 처리
+    const handleEmailChange = (e) => {
+      const value = e.target.value;
+      setEmail(value);
 
     // 이메일 형식 검증
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     setEmailError(!emailRegex.test(value) && value !== ""); // 이메일 형식이 아니고 값이 비어있지 않을 때만 에러 표시
+    setEmailMatchError(false); 
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!emailError) {
-      alert("이메일 : " + email);
-    }
-  };
+    // 이메일 확인 요청
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+  
+      if (!emailError) {
+        try {
+          const response = await api.post("/member/checkEmail", { email });
+          
+          if (response.data) {
+            // 이메일이 일치
+            navigate("/myPage/edit");
+          } else {
+            // 이메일이 불일치
+            setEmailMatchError(true);
+          }
+        } catch (error) {
+          console.error("이메일 확인 요청 실패:", error);
+          setEmailMatchError(true);
+        }
+      }
+    };
 
   return (
     <div className="w-full h-auto">
@@ -56,7 +92,7 @@ const ProfileAuth = () => {
               <label className="flex text-sm font-bold mb-2">
                 이메일
                 <p className="pl-3 font-normal text-[#707070] text-sm">
-                  ab******@naver.com
+                  {maskedEmail || "loading..."}
                 </p>
               </label>
               <div className="relative">
@@ -66,14 +102,17 @@ const ProfileAuth = () => {
                   value={email}
                   onChange={handleEmailChange}
                   className={`w-full border-[1px] outline-none text-[#707070] font-normal text-base rounded-[10px] px-4 h-12 ${
-                    emailError
-                      ? "border-main01 border-[2px] bg-[#F5F5F5]"
-                      : "border-[#e4e4e4] bg-white"
+                    emailError || emailMatchError ? "border-main01 border-[2px] bg-[#F5F5F5]" : "border-[#e4e4e4] bg-white"
                   }`}
                 />
                 {emailError && (
                   <p className="text-sm text-main01 font-normal mt-[6px] absolute top-12">
                     올바른 이메일 형식이 아닙니다.
+                  </p>
+                )}
+                {emailMatchError && (
+                  <p className="text-sm text-main01 font-normal mt-[6px] absolute top-12">
+                    입력하신 정보가 맞지 않습니다.
                   </p>
                 )}
               </div>
