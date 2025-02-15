@@ -13,9 +13,10 @@ const ProfileEdit = () => {
 
   const [email, setEmail] = useState("");
   const [nickname, setNickname] = useState("");
-  const [interest, setInterest] = useState("");
+  const [selectedInterests, setSelectedInterests] = useState([]); // 다중 선택 가능
   const [diabetes, setDiabetes] = useState(false);
   const [showDeletePopup, setShowDeletePopup] = useState(false); // 탈퇴 확인 팝업 
+  const [showToast, setShowToast] = useState(false)
   const navigate = useNavigate(); 
 
   // 마이페이지 정보 불러오기
@@ -27,29 +28,66 @@ const ProfileEdit = () => {
 
         setEmail(email);
         setNickname(nickname);
-        setInterest(interest);
         setDiabetes(diabetes);
+
+        // 관심 있는 제로 유형 처리
+        if (interest === "BOTH") {
+          setSelectedInterests(["ZEROSUGAR", "ZEROKCAL"]);
+        } else if (interest) {
+          setSelectedInterests([interest]);
+        } else {
+          setSelectedInterests([]);
+        }
       } catch (error) {
         console.error("사용자 정보 불러오기 실패:", error);
       }
     };
+
     fetchUserInfo();
   }, []);
 
-   // 관심 있는 제로 유형 선택
-   const handleInterestClick = (selected) => {
-    if (interest === selected) {
-      setInterest(""); // 선택 취소 가능
-    } else if (interest === "BOTH" || selected === "BOTH") {
-      setInterest(selected);
-    } else {
-      setInterest(interest ? "BOTH" : selected);
-    }
+   // 관심 있는 제로 유형 선택/해제
+  const handleInterestClick = (type) => {
+    setSelectedInterests((prev) => {
+      const isSelected = prev.includes(type);
+      if (isSelected) {
+        return prev.filter((item) => item !== type); // 선택 해제
+      } else {
+        return [...prev, type]; // 선택 추가
+      }
+    });
   };
 
   // 당뇨 여부 선택
   const handleDiabetesClick = (selected) => {
     setDiabetes(selected === "맞아요");
+  };
+
+  // 저장 버튼 클릭 시 PUT 요청
+  const handleSave = async () => {
+    let interest = null; // 기본값 null
+
+    if (selectedInterests.length === 2) {
+      interest = "BOTH";
+    } else if (selectedInterests.length === 1) {
+      interest = selectedInterests[0];
+    }
+
+    try {
+      await api.put("/member/myPage/info", {
+        email,
+        nickname,
+        interest,
+        diabetes,
+      });
+
+       // 저장 성공 시 토스트 메시지
+       setShowToast(true);
+       setTimeout(() => setShowToast(false), 3000); // 3초 
+     } catch (error) {
+       console.error("정보 수정 실패:", error);
+       alert("정보 수정 실패했습니다. 다시 시도해주세요.");
+     }
   };
 
    // 회원 탈퇴 요청
@@ -88,7 +126,6 @@ const ProfileEdit = () => {
         {/* 메인 컨텐츠 */}
         <div className="w-[400px] mx-auto py-4 ">
           {/* 이메일 */}
-          {/* 이메일 */}
           <div className="mb-10">
             <label className="block text-sm font-bold mr-2 mb-3">이메일</label>
             <div className="text-base font-normal">{email || "loading..."}</div>
@@ -109,15 +146,23 @@ const ProfileEdit = () => {
           {/* 구분선  */}
           <hr className="w-full my-10 h-[2px] bg-buttongray" />
 
-           {/* 관심 있는 제로 유형 */}
-           <div className="mb-10">
-            <label className="block text-sm font-bold mb-3">관심 있는 제로 유형</label>
-            <div className="flex space-x-4">
-              <FilterButton label={"제로슈거"} onClick={handleInterestClick} isSelected={interest === "ZEROSUGAR" || interest === "BOTH"} />
-              <FilterButton label={"제로칼로리"} onClick={handleInterestClick} isSelected={interest === "ZEROKCAL" || interest === "BOTH"} />
+            {/* 관심 있는 제로 유형 */}
+            <div className="mb-10">
+              <label className="block text-sm font-bold mb-3">관심 있는 제로 유형</label>
+              <div className="flex space-x-4">
+                <FilterButton
+                  label={"제로슈거"}
+                  onClick={() => handleInterestClick("ZEROSUGAR")}
+                  isSelected={selectedInterests.includes("ZEROSUGAR")}
+                />
+                <FilterButton
+                  label={"제로칼로리"}
+                  onClick={() => handleInterestClick("ZEROKCAL")}
+                  isSelected={selectedInterests.includes("ZEROKCAL")}
+                />
+              </div>
             </div>
-          </div>
-
+            
           {/* 당뇨 관리 */}
           <div className="mb-10">
             <label className="block text-sm font-bold mb-3">당뇨 환자이거나 혈당 관리에 집중하고 있나요?</label>
@@ -127,9 +172,11 @@ const ProfileEdit = () => {
             </div>
           </div>
 
-          {/* 저장 버튼*/}
+          {/* 저장 버튼 */}
           <div className="mb-10">
-            <button className="w-[400px] h-[52px] bg-main01 text-white rounded-lg font-bold text-[18px]">저장</button>
+            <button onClick={handleSave} className="w-[400px] h-[52px] bg-main01 text-white rounded-lg font-bold text-[18px]">
+              저장
+            </button>
           </div>
 
           {/* 회원 탈퇴 */}
@@ -148,6 +195,9 @@ const ProfileEdit = () => {
       {showDeletePopup && (
         <DeleteCheck onConfirm={handleDeleteAccount} onCancel={() => setShowDeletePopup(false)} />
       )}
+
+      {/* 토스트 메시지 */}
+      {showToast && <Toast message="변경 사항이 저장되었습니다." />}
     </div>
   );
 };
