@@ -6,6 +6,7 @@ import SearchHeader from '../../components/SearchHeader';
 // import FilterDropButton from "../../components/Home/FilterDropButton";
 import GoBack from "../../components/Home/GoBack";
 import SearchFilter from "../../components/Home/SearchFilter"
+import HotReview from "../../components/Home/HotReview";
 import { categoryMap } from "../../components/Home/CategoryBar"; //카테고리명 가져오기
 import api from "../../api/axiosInstance";
 
@@ -59,11 +60,15 @@ const Category = () => {
           </div>
         </section>
 
-        {/* HOT 리 뷰 섹션 */}
+        {/* HOT 리뷰 섹션 */}
         <section className="mb-16">
           <h2 className="text-4xl font-bold mb-8 flex justify-center">방금 올라온 HOT 리뷰 🔥</h2>
           <div className="flex justify-between items-center">
-
+          <HotReview/>
+          <HotReview/>
+          <HotReview/>
+          <HotReview/>
+          <HotReview/>
           </div>
         </section>
 
