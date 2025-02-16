@@ -1,6 +1,6 @@
 import React from "react";
 
-const categoryMap = {
+export const categoryMap = {  // export 추가
   BEVERAGE_TEA: "음료 · 차",
   SNACK_BREAD: "과자 · 빵",
   DAIRY_PRODUCTS: "유가공품",

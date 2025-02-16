@@ -48,7 +48,7 @@ const Main = () => {
     <div className="w-full h-auto">
       <Header />
         {/* 배너 */}
-        <section className="mb-28">
+        <section className="mb-28 relative z-[-10]">
           <SearchBanner/>
         </section>
 
@@ -71,7 +71,7 @@ const Main = () => {
 
               {/* 더 많은상품보기 버튼 */}
               <button 
-                onClick={() => navigate("/category")}
+                onClick={() => navigate(`/category?category=${selectedCategory}`)}
                 className="text-[14px] text-txtgray font-normal px-6 py-1 border border-buttongray bg-white rounded-[4px] flex justify-center items-center absolute right-[0px] bottom-[-20px]"
               >
                 더 많은 상품 보기
