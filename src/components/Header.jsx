@@ -4,6 +4,17 @@ import logo1 from '../images/logo1.png';
 import logo2 from '../images/logo2.png';
 import { ReactComponent as MenuIcon } from '../images/Menu.svg';
 
+const categoryMap = { // 카테고리 매핑 
+  '음료 · 차': 'BEVERAGE_TEA',
+  '과자 · 빵': 'SNACK_BREAD',
+  '유가공품': 'DAIRY_PRODUCTS',
+  '아이스크림 · 빙과': 'ICE_CREAM',
+  '초콜릿': 'CHOCOLATE',
+  '면 · 떡': 'NOODLE_RICE_CAKE',
+  '농수산가공식품': 'AGRICULTURAL_PRODUCTS',
+  '기타': 'ETC',
+};
+
 const Header = () => {
   const navigate = useNavigate();
 
@@ -54,25 +65,17 @@ const Header = () => {
             />
             {isMenuVisible && (
               <div className="menu-popup absolute top-9 left-0 mt-2 p-[16px] rounded-[4px] bg-white shadow-[0px_1px_8px_0px_rgba(0,0,0,0.25)]">
-                {[
-                  '음료 · 차',
-                  '과자 · 빵',
-                  '유가공품',
-                  '아이스크림 · 빙과',
-                  '초콜릿',
-                  '면 · 떡',
-                  '농수산가공식품',
-                  '기타',
-                ].map((text, index) => (
+                {Object.keys(categoryMap).map((text, index) => ( 
                   <button
                     key={index}
                     className="flex group font-bold w-[216px] h-[48px] px-[32px] justify-between items-center rounded-[10px] bg-white text-[#707070] hover:bg-[var(--main-02,#FCEDDA)] hover:text-main01 mb-2 last:mb-0"
+                    onClick={() => navigate(`/category?category=${categoryMap[text]}`)}
                   >
                     <span>{text}</span>
                     <span className="text-main01 opacity-0 group-hover:opacity-100">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewBox="0 0 8 14" fill="none">
-                    <path d="M0.888672 11.8956L5.28393 6.99961L0.888672 2.10361L2.2418 0.599609L7.99978 6.99961L2.2418 13.3996L0.888672 11.8956Z" fill="#EE4E34"/>
-                  </svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewBox="0 0 8 14" fill="none">
+                        <path d="M0.888672 11.8956L5.28393 6.99961L0.888672 2.10361L2.2418 0.599609L7.99978 6.99961L2.2418 13.3996L0.888672 11.8956Z" fill="#EE4E34"/>
+                      </svg>
                     </span>
                   </button>
                 ))}
