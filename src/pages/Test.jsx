@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ProductInfo from "../components/Comparison/ProductInfo";
 import Ingredient from "../components/Comparison/Ingredient";
 import RateTopReview from "../components/Comparison/RateTopReview";
-
+import HotReview from "../components/Home/HotReview";
 const Test = () => { 
   const [products, setProducts] = useState([
     { 
@@ -45,6 +45,19 @@ const Test = () => {
           <RateTopReview rating={product.rating} goodTags={product.goodTags} badTags={product.badTags} />
         </div>
       ))}
+      <div className="flex justify-center items-center min-h-screen bg-gray-100 p-4">
+      
+      <HotReview
+        reviewImg="https://times.postech.ac.kr/news/photo/202305/22555_27183_4841.jpg"
+        reviewText="리뷰 내용 최대 한줄에 표시시시시시시시"
+        userId="id****ng"
+        date="2025.01.01"
+        productImg="https://times.postech.ac.kr/news/photo/202305/22555_27183_4841.jpg"
+        productName="제품명 제품명 제품명제품명제품명제품명"
+        reviewCount={999}
+        rating={5.0}
+      />
+    </div>
     </div>
   );
 };
