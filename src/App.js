@@ -47,7 +47,7 @@ function App() {
         <Route path="/search" element={<Search />} />
 
         {/* Detail */}
-        <Route path="/detail" element={<Detail />} />
+        <Route path="/product/detail/:productId" element={<Detail />} />
         <Route path="/comparison" element={<Comparison />} />
         
         {/* Mypage */}

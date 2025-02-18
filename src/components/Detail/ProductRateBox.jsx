@@ -1,19 +1,19 @@
 import React from 'react';
 import RateBox from './RateBox';
 
-const ProductRateBox = () => {
+const ProductRateBox = ({ imageUrl, rating, reviews }) => {
   return (
     <div className="flex flex-col w-[444px] items-center">
-      {/* 이미지 부분 */}
+      {/* 이미지 */}
       <div className="w-full h-[439px] mb-5">
         <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCmuXKfK5A_cKXnu4IduMpOl6icmsILZheipngsrJgH1OEf1Y2jHssye2cqjLKzdLC3xk&usqp=CAU"
+          src={imageUrl}
           alt="Product"
           className="w-full h-full object-cover rounded-lg"
         />
       </div>
       {/* RateBox */}
-      <RateBox rating="4.22" reviews="12" />
+      <RateBox rating={rating !== undefined ? rating : "0"} reviews={reviews || "0"} />
     </div>
   );
 };

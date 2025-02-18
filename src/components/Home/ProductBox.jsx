@@ -1,9 +1,27 @@
-// Updated ProductBox.jsx to receive 'product' as a prop and handle undefined product gracefully
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ZeroTag from "./ZeroTag";
+import api from "../../api/axiosInstance";
 
-const ProductBox = ({ product }) => { // 'product'를 props로 받음
+const ProductBox = ({ product }) => {
   const [isClicked, setIsClicked] = useState(false);
+  const navigate = useNavigate();
+
+  //  상품 클릭 시 POST 요청 후 Detail 페이지로 이동
+  const handleClick = async () => {
+    try {
+      const response = await api.post(`/product/detail/${product.id}`);
+
+      if (response.data && response.data.check) {
+        // 상품 상세 정보가 포함된 상태로 페이지 이동
+        navigate(`/product/detail/${product.id}`, { state: { product: response.data.information } });
+      } else {
+        console.error("잘못된 응답 형식:", response.data);
+      }
+    } catch (error) {
+      console.error("상품 상세 정보를 가져오는 데 실패했습니다:", error);
+    }
+  };
 
   const handleIconClick = () => {
     setIsClicked(!isClicked);
@@ -14,7 +32,7 @@ const ProductBox = ({ product }) => { // 'product'를 props로 받음
   }
 
   return (
-    <div className="max-w-64">
+    <div className="max-w-64 cursor-pointer" onClick={handleClick}>
       <img
         src={product.imageUrl || "https://via.placeholder.com/150"}
         alt={product.productName || "상품명 없음"}
