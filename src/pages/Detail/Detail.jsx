@@ -46,13 +46,13 @@ const Detail = () => {
         {/* 상품정보 요약 */}
         <p className="font-bold text-[32px] pb-9 ">상품정보 요약</p>
 
-        {/* 한눈에 보는 성분 */}
-        <div>
-          <SumUpZero
-            sugarContent={'“찐” 제로슈거 인증!'}
-            calorieContent={'제로칼로리 표시 기준치 이하예요!'}
+         {/* 한눈에 보는 성분 */}
+         {product && (
+          <SumUpZero 
+            ingredient={product.ingredient} 
+            artificialSweets={product.artificialSweets} 
           />
-        </div>
+        )}
         {/* 구분선 */}
         <hr className="my-[58px] h-1 bg-buttongray"></hr>
         <ProductReview />
