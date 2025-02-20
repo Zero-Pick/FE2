@@ -46,7 +46,7 @@ const FloatingBox = () => {
                 className="bg-buttongray w-28 h-28 p-2 cursor-pointer flex flex-col rounded-[4px] justify-end items-start relative group"
               >
                 <img
-                  src={product.imageUrl || "https://via.placeholder.com/150"}
+                  src={product.imageUrl }
                   alt={product.productName || "상품명 없음"}
                   className="w-full h-full object-cover rounded-[4px]"
                 />
