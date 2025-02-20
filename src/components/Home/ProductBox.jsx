@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState  } from "react";
 import { useNavigate } from "react-router-dom";
 import ZeroTag from "./ZeroTag";
 import api from "../../api/axiosInstance";
@@ -7,9 +7,26 @@ const ProductBox = ({ product }) => {
   const [isClicked, setIsClicked] = useState(false);
   const navigate = useNavigate();
 
-  //  상품 클릭 시 POST 요청 후 Detail 페이지로 이동
+  // 최근 본 상품 저장
+  const saveRecentProduct = async (productId) => {
+    try {
+      console.log(`📌 최근 본 상품 저장 : ${productId}`);
+      const response = await api.post(`/recent/${productId}`);
+      console.log(`✅ 최근 본 상품 저장 완료: ${productId}`, response.data);
+    } catch (error) {
+      console.error(`❌ 최근 본 상품 저장 실패 (productId: ${productId})`, error);
+    }
+  };
+
+
+  //  상품 클릭 시 상세페이지 이동 + 최근 본 상품 저장
   const handleClick = async () => {
     try {
+      console.log(` 상품 : ${product.id}`);
+      // 최근 본 상품 저장
+      await saveRecentProduct(product.id);
+
+      // 상품 상세 페이지로 이동
       const response = await api.post(`/product/detail/${product.id}`);
 
       if (response.data && response.data.check) {
