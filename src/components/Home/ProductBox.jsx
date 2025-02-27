@@ -40,10 +40,30 @@ const ProductBox = ({ product }) => {
     }
   };
 
-  const handleIconClick = () => {
-    setIsClicked(!isClicked);
+  const handleIconClick = async (event) => {
+    event.stopPropagation(); // 부모 div 클릭 방지
+  
+    try {
+      if (isClicked) {
+        // 찜 취소 
+        const response = await api.delete(`/product/bookmark/${product.id}`);
+        if (response.data && response.data.check) {
+          console.log(`상품 ID ${product.id} - 찜 취소 완료`);
+          setIsClicked(false);
+        }
+      } else {
+        // 찜 추가
+        const response = await api.post(`/product/bookmark/${product.id}`);
+        if (response.data && response.data.check) {
+          console.log(` 상품 ID ${product.id} - 찜 추가 완료`);
+          setIsClicked(true);
+        }
+      }
+    } catch (error) {
+      console.error(` 상품 ID ${product.id} - 찜하기 API 요청 실패:`, error);
+    }
   };
-
+  
   if (!product) {
     return <div>상품 정보를 불러오는 중입니다...</div>;
   }

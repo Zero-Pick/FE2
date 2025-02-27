@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ProductRateBox from "./ProductRateBox";
 import DetailRound from "./DetailRound";
 import PutButton from "./PutButton";
@@ -6,26 +6,42 @@ import ZeroTag from "../../components/Home/ZeroTag";
 import CompareBox from "./CompareBox";
 
 const DetailBox = ({ product }) => {
-  const [showPopup, setShowPopup] = React.useState(false);
-
-  // 팝업 위치 고정
-  const [popupPosition, setPopupPosition] = React.useState({ top: 0, left: 0 });
+  const [showPopup, setShowPopup] = useState(false);
+  const [compareList, setCompareList] = useState([]); // 비교 목록 상태
+  const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 });
 
   if (!product) {
     return <p className="text-center text-gray-500">상품 정보를 불러오는 중...</p>;
   }
 
+  // 비교함에 담기 버튼 클릭 
   const handleCompareButtonClick = (event) => {
     const buttonRect = event.target.getBoundingClientRect();
-    setShowPopup((prev) => {
-      if (!prev) {
-        setPopupPosition({
-          top: buttonRect.bottom + window.scrollY + 10,
-          left: buttonRect.left + window.scrollX,
-        });
-      }
-      return !prev;
+
+    if (showPopup) {
+      // 팝업이 열려 있으면 닫기
+      setShowPopup(false);
+      return;
+    }
+    // CompareBox 위치 
+    setPopupPosition({
+      top: buttonRect.bottom + window.scrollY + 10,
+      left: buttonRect.left + window.scrollX,
     });
+
+    setShowPopup(true); // 팝업 열기
+
+    //  비교 목록에 상품이 없을 경우 추가
+    if (!compareList.some((item) => item.id === product.id) && compareList.length < 3) {
+      setCompareList([...compareList, product]);
+      console.log(` 상품 ID ${product.id} - 비교 목록에 추가됨`);
+    }
+  };
+
+  //  비교함에서 상품 삭제 
+  const removeProduct = (productId) => {
+    setCompareList(compareList.filter((item) => item.id !== productId));
+    console.log(` 상품 ID ${productId} - 비교 목록에서 제거됨`);
   };
 
   return (
@@ -88,8 +104,8 @@ const DetailBox = ({ product }) => {
           className="absolute"
           style={{ top: `${popupPosition.top}px`, left: `${popupPosition.left}px` }}
         >
-          <CompareBox />
-        </div>
+          <CompareBox compareList={compareList} removeProduct={removeProduct}  />
+          </div>
       )}
     </div>
   );
